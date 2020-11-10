@@ -9,6 +9,7 @@
 	    <textarea name="content" rows="4" cols="50" placeholder="Just write whatever you want to..."></textarea>
 	    <br>
 	    <input type="text" name="author" placeholder="Your name">
+	    <input type="text" name="course" placeholder="Course name">
 	    <input type="submit" value="Post">
 	</form>
 	</center>
@@ -25,7 +26,7 @@
 	   <div class="post_box-header">
 	      <div class="post_box-options"><button class="option-btn">Reply</button></div>
 	      <div style="background: rgb(0, 97, 146) none repeat scroll 0% 0%; box-shadow: rgb(0, 97, 146) 0px 0px 0px 2px;" class="post_box-avatar">{{post.author[0]}}</div>
-	      <div class="name-header">{{post.author}}</div>
+	      <div class="name-header">{{post.course}}</div>
 	      <div class="post_box-subtitle"> Posted at <i>{{readable_time(post.timestamp)}}</i></div>
 	   </div>
 	   <div>
