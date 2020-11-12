@@ -5,12 +5,17 @@
 	<br>
 
 	<center>
-	<form action="/submit" id="textform" method="post">
-	    <textarea name="content" rows="4" cols="50" placeholder="Just write whatever you want to..."></textarea>
+	<form action="/submit" class="submit-review" id="textform" method="post">
+	    <textarea name="content" rows="4" cols="50" placeholder="Write your review here...", maxlength="2000"></textarea>
 	    <br>
 	    <input type="text" name="author" placeholder="Your name">
-	    <input type="text" name="course" placeholder="Course name">
-	    <input type="submit" value="Post">
+	    <select id="course_list" name="courses">
+		  <option value="advanced-computer-networks">Advanced Computer Networks</option>
+		  <option value="distributed-systems">Distributed Systems</option>
+		  <option value="raga-and-rhythm">Raga and Rhythm</option>
+		  <option value="pois">Principles of Information Security</option>
+		</select>
+	    <input type="submit" value="Submit">
 	</form>
 	</center>
 
@@ -38,6 +43,14 @@
 	{% endfor %}
 
 	<style>
+		.submit-review textarea {
+		    max-width: 600px;
+		    max-height: 400px;
+		    min-width: 400px;
+		    min-height: 200px;
+		    width: 400px;
+		    height: 200px
+		}
 		.post_box {
 		    background: #fff;
 		    padding: 12px 0px 0px 12px;
