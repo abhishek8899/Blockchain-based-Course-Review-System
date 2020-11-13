@@ -35,6 +35,24 @@ def fetch_posts():
 
 
 @app.route('/')
+def sample():
+    fetch_posts()
+    return render_template('sample.html',
+                           title='YourNet: Decentralized '
+                                 'content sharing',
+                           posts=posts,
+                           p1 = posts[0],
+                           p2 = posts[1],
+                           p3 = posts[2],
+                           p4 = posts[3],
+                           p5 = posts[4],
+                           # p6 = posts[-6],
+                           node_address=CONNECTED_NODE_ADDRESS,
+                           readable_time=timestamp_to_string)
+
+
+
+@app.route('/form')
 def index():
     fetch_posts()
     return render_template('index.html',
@@ -43,7 +61,6 @@ def index():
                            posts=posts,
                            node_address=CONNECTED_NODE_ADDRESS,
                            readable_time=timestamp_to_string)
-
 
 @app.route('/submit', methods=['POST'])
 def submit_textarea():
@@ -67,7 +84,7 @@ def submit_textarea():
                   json=post_object,
                   headers={'Content-type': 'application/json'})
 
-    return redirect('/')
+    return redirect('/form')
 
 
 def timestamp_to_string(epoch_time):

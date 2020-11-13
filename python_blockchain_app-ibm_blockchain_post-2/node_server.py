@@ -3,7 +3,9 @@ import json
 import time
 
 from flask import Flask, request
+from flask import render_template, redirect, request
 import requests
+import pickle
 
 
 class Block:
@@ -27,8 +29,20 @@ class Blockchain:
     difficulty = 2
 
     def __init__(self):
-        self.unconfirmed_transactions = []
-        self.chain = []
+        try:
+            config_ut = []
+            with open('config.ut', 'rb') as config_ut_file:
+                config_ut = pickle.load(config_ut_file)
+            self.unconfirmed_transactions = config_ut
+        except:
+            self.unconfirmed_transactions = []
+        try:
+            config_chain = []
+            with open('config.chain', 'rb') as config_chain_file:
+                config_chain = pickle.load(config_chain_file)
+            self.chain = config_chain
+        except:
+            self.chain = []
 
     def create_genesis_block(self):
         """
@@ -62,6 +76,8 @@ class Blockchain:
 
         block.hash = proof
         self.chain.append(block)
+        with open('config.chain', 'wb') as config_chain_file:
+            pickle.dump(self.chain, config_chain_file)
         return True
 
     @staticmethod
@@ -81,6 +97,8 @@ class Blockchain:
 
     def add_new_transaction(self, transaction):
         self.unconfirmed_transactions.append(transaction)
+        with open('config.ut', 'wb') as config_ut_file:
+            pickle.dump(self.unconfirmed_transactions, config_ut_file)
 
     @classmethod
     def is_valid_proof(cls, block, block_hash):
@@ -131,6 +149,8 @@ class Blockchain:
         self.add_block(new_block, proof)
 
         self.unconfirmed_transactions = []
+        with open('config.ut', 'wb') as config_ut_file:
+            pickle.dump(self.unconfirmed_transactions, config_ut_file)
 
         return True
 
@@ -191,10 +211,12 @@ def mine_unconfirmed_transactions():
         if chain_length == len(blockchain.chain):
             # announce the recently mined block to the network
             announce_new_block(blockchain.last_block)
-        return "Block #{} is mined.".format(blockchain.last_block.index)
-
+        # return "Block #{} is mined.".format(blockchain.last_block.index)
+    return redirect('http://127.0.0.1:5000/form')
 
 # endpoint to add new peers to the network.
+
+
 @app.route('/register_node', methods=['POST'])
 def register_new_peers():
     node_address = request.get_json()["node_address"]
