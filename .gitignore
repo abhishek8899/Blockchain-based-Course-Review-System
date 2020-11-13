@@ -1,2 +1,4 @@
 python_blockchain_app-ibm_blockchain_post-2/app/*.pyc
 python_blockchain_app-ibm_blockchain_post-2/*.pyc
+python_blockchain_app-ibm_blockchain_post-2/__pycache__/
+python_blockchain_app-ibm_blockchain_post-2/app/__pycache__/
