@@ -46,7 +46,7 @@
       <div class="logo float-left">
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <h1 class="text-light"><a href="#header"><span>NewBiz</span></a></h1> -->
-        <a href="#intro" class="scrollto"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="" class="img-fluid"></a>
+        <a href="#intro" class="scrollto"><img src="{{ url_for('static', filename='img/iit.png') }}" alt="" class="img-fluid"></a>
       </div>
 
       <nav class="main-nav float-right d-none d-lg-block">
@@ -86,8 +86,8 @@
       <div class="intro-info">
         <h2>First ever<br><span>Blockchain</span><br>based course review system!</h2>
         <div>
-          <a href="#about" class="btn-get-started scrollto">Get Started</a>
-          <a href="#services" class="btn-services scrollto">Our Services</a>
+          <a href="http://127.0.0.1:5000/form" class="btn-get-started scrollto">Write a review</a>
+          <a href="#services" class="btn-services scrollto">Recent reviews</a>
         </div>
       </div>
 
@@ -231,8 +231,8 @@
           <div class="col-md-6 col-lg-5 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
             <div class="box">
               <div class="icon"><i class="ion-ios-clock-outline" style="color: #4680ff;"></i></div>
-              <h4 class="title"><a href="">{{p4.course}}</a></h4>
-              <p class="description">{{p4.course}}</p>
+              <h4 class="title"><a href="">{{p6.course}}</a></h4>
+              <p class="description">{{p6.content}}</p>
             </div>
           </div>
 
@@ -291,23 +291,23 @@
         <div class="row counters">
 
           <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">274</span>
-            <p>Clients</p>
+            <span data-toggle="counter-up">{{num_reviews}}</span>
+            <p>Reviews</p>
           </div>
 
           <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">421</span>
-            <p>Projects</p>
+            <span data-toggle="counter-up">41</span>
+            <p>Users</p>
           </div>
 
           <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">1,364</span>
-            <p>Hours Of Support</p>
+            <span data-toggle="counter-up">{{blockchain_len}}</span>
+            <p>Blockchain length</p>
           </div>
 
           <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">18</span>
-            <p>Hard Workers</p>
+            <span data-toggle="counter-up">5</span>
+            <p>Courses</p>
           </div>
   
         </div>
