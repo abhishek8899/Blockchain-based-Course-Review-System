@@ -2,7 +2,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
-from app import views
+# from app import views
 
 from flask_sqlalchemy import SQLAlchemy 
 from flask_login import LoginManager

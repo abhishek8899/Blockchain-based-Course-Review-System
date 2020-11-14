@@ -66,6 +66,13 @@
               <li><a href="#">Compilers</a></li>
             </ul>
           </li>
+          {% if not current_user.is_authenticated %}
+          <li><a href="http://127.0.0.1:5000/login">Login</a></li>
+          <li><a href="http://127.0.0.1:5000/signup">Sign Up</a></li>
+          {% endif %}
+          {% if current_user.is_authenticated %}
+          <li><a href="http://127.0.0.1:5000/logout">Logout</a></li>
+          {% endif %}
           <li><a href="#contact">Contact Us</a></li>
         </ul>
       </nav><!-- .main-nav -->
