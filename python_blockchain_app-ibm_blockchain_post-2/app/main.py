@@ -2,9 +2,12 @@ import datetime
 import json
 
 import requests
-from flask import render_template, redirect, request
 import pickle
-from app import app
+# from app import app
+from flask import Blueprint, render_template, redirect, request
+from flask_login import login_required, current_user
+
+main = Blueprint('main', __name__)
 
 # The node with which our application interacts, there can be multiple
 # such nodes as well.
@@ -43,7 +46,7 @@ def fetch_posts():
                        reverse=True)
 
 
-@app.route('/')
+@main.route('/')
 def sample():
     fetch_posts()
     return render_template('sample.html',
@@ -61,7 +64,8 @@ def sample():
 
 
 
-@app.route('/form')
+@main.route('/form')
+@login_required
 def index():
     fetch_posts()
     return render_template('index.html',
@@ -71,14 +75,16 @@ def index():
                            node_address=CONNECTED_NODE_ADDRESS,
                            readable_time=timestamp_to_string)
 
-@app.route('/submit', methods=['POST'])
+@main.route('/submit', methods=['POST'])
+@login_required
 def submit_textarea():
     """
     Endpoint to create a new transaction via our application.
     """
     post_content = request.form["content"]
     course = request.form["course"]
-    author = request.form["author"]
+    # author = request.form["author"]
+    author = current_user.name
 
     post_object = {
         'author': author,
@@ -94,6 +100,11 @@ def submit_textarea():
                   headers={'Content-type': 'application/json'})
 
     return redirect('/form')
+
+@main.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', name=current_user.name)
 
 
 def timestamp_to_string(epoch_time):
