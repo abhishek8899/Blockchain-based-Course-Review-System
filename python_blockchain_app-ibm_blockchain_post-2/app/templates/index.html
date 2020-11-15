@@ -1,21 +1,25 @@
 <!-- extend base layout -->
 {% extends "base.html" %}
 
+{% block headers %}
+	<meta charset="utf-8">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
+{% endblock %}
+
 {% block content %}
 	<br>
 
 	<center>
 	<form action="/submit" class="submit-review" id="textform" method="post">
-	    <textarea name="content" rows="4" cols="50" placeholder="Write your review here...", maxlength="2000"></textarea>
+		{{ form.autocomp.label }}: {{ form.autocomp }}
+		<!-- <br> -->
+	    <input type="text" name="author" placeholder="Your name">
 	    <br>
-	    <!-- <input type="text" name="author" placeholder="Your name"> -->
-	    <select id="course_list" name="course">
-		  <option value="advanced-computer-networks">Advanced Computer Networks</option>
-		  <option value="distributed-systems">Distributed Systems</option>
-		  <option value="raga-and-rhythm">Raga and Rhythm</option>
-		  <option value="pois">Principles of Information Security</option>
-		  <option value="compilers">Compilers</option>
-		</select>
+		<br>
+	    <textarea name="content" rows="4" cols="50" placeholder="Write your review here...(Max 2000 characters)", maxlength="2000"></textarea>
+	    <br>
 	    <input type="submit" value="Submit">
 	</form>
 	</center>
@@ -114,4 +118,17 @@
 		}
 	</style>
     </div>
+    <!-- for autocomplete course name -->
+	<script>
+	  $(function() {
+	      $.ajax({
+	          url: '{{ url_for("main.autocomplete") }}'
+	          }).done(function (data){
+	              $('#course_name_autocomplete').autocomplete({
+	                  source: data,
+	                  minLength: 2
+	              });
+	          });
+	      });
+	</script>
 {% endblock %}
