@@ -4,8 +4,10 @@ import json
 import requests
 import pickle
 # from app import app
-from flask import Blueprint, render_template, redirect, request
+from flask import Blueprint, render_template, redirect, request, Response
 from flask_login import login_required, current_user
+from wtforms import TextField, Form
+from app import constants
 
 main = Blueprint('main', __name__)
 
@@ -68,12 +70,14 @@ def sample():
 @login_required
 def index():
     fetch_posts()
+    form = SearchForm(request.form)
     return render_template('index.html',
                            title='YourNet: Decentralized '
                                  'content sharing',
                            posts=posts,
                            node_address=CONNECTED_NODE_ADDRESS,
-                           readable_time=timestamp_to_string)
+                           readable_time=timestamp_to_string,
+                           form=form)
 
 @main.route('/submit', methods=['POST'])
 @login_required
@@ -82,7 +86,7 @@ def submit_textarea():
     Endpoint to create a new transaction via our application.
     """
     post_content = request.form["content"]
-    course = request.form["course"]
+    course = request.form['autocomp']
     # author = request.form["author"]
     author = current_user.name
 
@@ -109,3 +113,18 @@ def profile():
 
 def timestamp_to_string(epoch_time):
     return datetime.datetime.fromtimestamp(epoch_time).strftime('%H:%M')
+
+class SearchForm(Form):
+    autocomp = TextField('Course Name', id='course_name_autocomplete')
+
+@main.route('/_autocomplete', methods=['GET'])
+def autocomplete():
+    return Response(json.dumps(constants.COURSE_NAMES), mimetype='application/json')
+
+
+# For a reference to implement auto-complete functionality.
+# Can be removed later.
+@main.route('/search', methods=['GET', 'POST'])
+def search_course():
+    form = SearchForm(request.form)
+    return render_template("search.html", form=form)
