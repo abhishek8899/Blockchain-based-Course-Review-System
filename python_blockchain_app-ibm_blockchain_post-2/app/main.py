@@ -80,6 +80,7 @@ def submit_review():
                            readable_time=timestamp_to_string,
                            form=form)
 
+# this handles ONLY submit of "course reviews"
 @main.route('/submit', methods=['POST'])
 @login_required
 def submit_textarea():
