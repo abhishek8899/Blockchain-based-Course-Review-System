@@ -36,6 +36,18 @@ def signup_post():
     name = request.form.get('name')
     password = request.form.get('password')
 
+    if len(email) == 0:
+        flash('Enter non-empty email.')
+        return redirect(url_for('auth.signup'))
+
+    if len(name) == 0:
+        flash('Enter non-empty name.')
+        return redirect(url_for('auth.signup'))
+
+    if len(password) == 0:
+        flash('Enter non-empty password.')
+        return redirect(url_for('auth.signup'))
+
     user = User.query.filter_by(email=email).first()
 
     if user:

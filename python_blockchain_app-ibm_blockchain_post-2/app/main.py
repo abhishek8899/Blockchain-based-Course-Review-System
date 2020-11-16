@@ -128,3 +128,16 @@ def autocomplete():
 def search_course():
     form = SearchForm(request.form)
     return render_template("search.html", form=form)
+
+@main.route('/courses')
+@login_required
+def course_search():
+    fetch_posts()
+    form = SearchForm(request.form)
+    return render_template('course_search.html',
+                           title='YourNet: Decentralized '
+                                 'content sharing',
+                           posts=posts,
+                           node_address=CONNECTED_NODE_ADDRESS,
+                           readable_time=timestamp_to_string,
+                           form=form)
