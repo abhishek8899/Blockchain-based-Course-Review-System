@@ -54,7 +54,7 @@
           <li class="active"><a href="#intro">Home</a></li>
           <li><a href="#about">About us</a></li>
           <li><a href="#services">Recent reviews</a></li>
-          <li><a href="http://127.0.0.1:5000/form">Add new</a></li>
+          <li><a href="{{url_for('main.submit_review')}}">Add new</a></li>
           <li><a href="#portfolio">Mine</a></li>
           <li><a href="#team">Team</a></li>
           <li><a href="http://127.0.0.1:5000/courses">Courses</a></li>
@@ -85,7 +85,7 @@
       <div class="intro-info">
         <h2>First ever<br><span>Blockchain</span><br>based course review system!</h2>
         <div>
-          <a href="http://127.0.0.1:5000/form" class="btn-get-started scrollto">Write a review</a>
+          <a href="{{url_for('main.submit_review')}}" class="btn-get-started scrollto">Write a review</a>
           <a href="#services" class="btn-services scrollto">Recent reviews</a>
         </div>
       </div>

@@ -212,7 +212,7 @@ def mine_unconfirmed_transactions():
             # announce the recently mined block to the network
             announce_new_block(blockchain.last_block)
         # return "Block #{} is mined.".format(blockchain.last_block.index)
-    return redirect('http://127.0.0.1:5000/form')
+    return redirect('http://127.0.0.1:5000/submit_review')
 
 # endpoint to add new peers to the network.
 
