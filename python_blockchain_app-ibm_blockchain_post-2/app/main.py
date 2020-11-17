@@ -68,9 +68,13 @@ def sample():
     global current_course
     current_course = '*'
     balance = 10
-    author = current_user.name
-    author = hashlib.sha256(author.encode()) 
-    author = author.hexdigest()
+    author = 0
+    try:
+      author = current_user.name
+      author = hashlib.sha256(author.encode()) 
+      author = author.hexdigest()
+    except:
+      author = 0
     # print("-=-=--=-=-=-=--=-=-=-=-")
     # print(author)
     # print(Rcoins[author])
@@ -85,7 +89,7 @@ def sample():
     except:
         balance = 10
 
-    posts = fetch_posts()
+    posts = [post for post in fetch_posts() if 'author' in post.keys()]
     return render_template('sample.html',
                            posts=posts,
                            p1 = posts[0],
