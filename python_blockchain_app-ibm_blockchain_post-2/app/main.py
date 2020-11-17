@@ -11,9 +11,19 @@ from wtforms.validators import InputRequired
 from app import constants
 from gensim.summarization.summarizer import summarize
 
+import hashlib 
+  
+global userid
+
 main = Blueprint('main', __name__)
 
-
+Rcoins = {}
+try:
+    with open('config.rcoin', 'rb') as config_chain_file:
+        Rcoins = pickle.load(config_chain_file)
+except:
+    with open('config.rcoin', 'wb') as config_ut_file:
+        pickle.dump(Rcoins, config_ut_file)
 # The node with which our application interacts, there can be multiple
 # such nodes as well.
 CONNECTED_NODE_ADDRESS = "http://127.0.0.1:8000"
@@ -28,8 +38,8 @@ try:
 except:
     blockchain = []
 
-for block in blockchain:
-    print(block)
+# for block in blockchain:
+#     print(block)
 def fetch_posts():
     """
     Function to fetch the chain from a blockchain node, parse the
@@ -56,6 +66,24 @@ def fetch_posts():
 def sample():
     global current_course
     current_course = '*'
+    balance = 10
+    author = current_user.name
+    author = hashlib.sha256(author.encode()) 
+    author = author.hexdigest()
+    # print("-=-=--=-=-=-=--=-=-=-=-")
+    # print(author)
+    # print(Rcoins[author])
+    try:
+      with open('config.rcoin', 'rb') as config_chain_file:
+        Rcoins = pickle.load(config_chain_file)
+    except:
+      with open('config.rcoin', 'wb') as config_ut_file:
+        pickle.dump(Rcoins, config_ut_file)
+    try:
+        balance = Rcoins[author]
+    except:
+        balance = 10
+
     posts = fetch_posts()
     return render_template('sample.html',
                            posts=posts,
@@ -65,6 +93,7 @@ def sample():
                            p4 = posts[3],
                            p5 = posts[4],
                            p6 = posts[5],
+                           balance = balance,
                            num_reviews = len(posts),
                            blockchain_len = len(blockchain),
                            node_address=CONNECTED_NODE_ADDRESS,
@@ -88,6 +117,7 @@ def submit_review():
                            form=form)
 
 # this handles ONLY submit of "course reviews"
+
 @main.route('/submit', methods=['POST'])
 @login_required
 def submit_textarea():
@@ -98,7 +128,13 @@ def submit_textarea():
     course = request.form['autocomp']
     # author = request.form["author"]
     author = current_user.name
+    author = hashlib.sha256(author.encode()) 
+    author = author.hexdigest()
 
+    authors = [author]
+
+    with open('config.user', 'wb') as www:
+        pickle.dump(authors, www)
     post_object = {
         'author': author,
         'course': course,
@@ -176,6 +212,7 @@ def course_search_submit():
     course = request.form['autocomp']
     global current_course
     current_course = course
+
 
     return redirect('/courses')
 
