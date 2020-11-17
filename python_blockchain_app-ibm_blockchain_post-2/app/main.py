@@ -7,9 +7,11 @@ import pickle
 from flask import Blueprint, render_template, redirect, request, Response
 from flask_login import login_required, current_user
 from wtforms import TextField, Form
+from wtforms.validators import InputRequired
 from app import constants
 
 main = Blueprint('main', __name__)
+
 
 # The node with which our application interacts, there can be multiple
 # such nodes as well.
@@ -66,12 +68,12 @@ def sample():
 
 
 
-@main.route('/form')
+@main.route('/submit_review')
 @login_required
-def index():
+def submit_review():
     fetch_posts()
     form = SearchForm(request.form)
-    return render_template('index.html',
+    return render_template('submit_review.html',
                            title='YourNet: Decentralized '
                                  'content sharing',
                            posts=posts,
@@ -79,6 +81,7 @@ def index():
                            readable_time=timestamp_to_string,
                            form=form)
 
+# this handles ONLY submit of "course reviews"
 @main.route('/submit', methods=['POST'])
 @login_required
 def submit_textarea():
@@ -103,7 +106,7 @@ def submit_textarea():
                   json=post_object,
                   headers={'Content-type': 'application/json'})
 
-    return redirect('/form')
+    return redirect('/submit_review')
 
 @main.route('/profile')
 @login_required
@@ -115,19 +118,11 @@ def timestamp_to_string(epoch_time):
     return datetime.datetime.fromtimestamp(epoch_time).strftime('%H:%M')
 
 class SearchForm(Form):
-    autocomp = TextField('Course Name', id='course_name_autocomplete')
+    autocomp = TextField('Course Name', id='course_name_autocomplete', validators=[InputRequired()])
 
 @main.route('/_autocomplete', methods=['GET'])
 def autocomplete():
     return Response(json.dumps(constants.COURSE_NAMES), mimetype='application/json')
-
-
-# For a reference to implement auto-complete functionality.
-# Can be removed later.
-@main.route('/search', methods=['GET', 'POST'])
-def search_course():
-    form = SearchForm(request.form)
-    return render_template("search.html", form=form)
 
 @main.route('/courses')
 @login_required
