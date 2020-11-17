@@ -1,46 +1,226 @@
-<!-- extend base layout -->
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Blockchain based Course Review</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
-{% block headers %}
-<meta charset="utf-8">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
-{% endblock %}
+    <!-- Favicons -->
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
 
-{% block content %}
-<center>
-    <h1>Search coursewise reviews</h1>
-</center>
-<hr>
-<br>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
 
-<center>
-    <!-- Idhar '/submit' ke jagah jha search processing hogi wo route daal dena. -->
-    <form action="/search_submit" class="submit-review" id="textform" method="post">
-        {{ form.autocomp.label }}: {{ form.autocomp }}
-        <input type="submit" value="Submit">
-    </form>
-</center>
+    <!-- Bootstrap CSS File -->
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">
 
-<div style="margin: 20px;">
+    <!-- Libraries CSS Files -->
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}">
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='lib/ionicons/css/ionicons.min.css') }}">
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css') }}">
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='lib/lightbox/css/lightbox.min.css') }}">
 
-    {% for post in posts %}
-    <div class="post_box">
-        <div class="post_box-header">
-            <div class="post_box-options"><button class="option-btn">Reply</button></div>
-            <div style="background: rgb(0, 97, 146) none repeat scroll 0% 0%; box-shadow: rgb(0, 97, 146) 0px 0px 0px 2px;"
-                class="post_box-avatar">{{post.author[0]}}</div>
-            <div class="name-header">{{post.course}}</div>
-            <div class="post_box-subtitle"> Posted at <i>{{readable_time(post.timestamp)}}</i></div>
+    <!-- Main Stylesheet File -->
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- following 3 line are for search autocomplete feature in course names -->
+    <!-- <meta charset="utf-8"> -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
+    <!-- till here -->
+
+</head>
+
+<body style="padding-top: 60px">
+
+  <!--==========================
+  Header
+  ============================-->
+  <header id="header" class="fixed-top">
+    <div class="container">
+
+        <div class="logo float-left">
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <h1 class="text-light"><a href="#header"><span>NewBiz</span></a></h1> -->
+            <a href="{{url_for('main.sample')}}" class="scrollto"><img src="{{ url_for('static', filename='img/iit.png') }}" alt="" class="img-fluid"></a>
         </div>
-        <div>
-            <div class="post_box-body">
-                <p>{{post.content}}</p>
+
+        <nav class="main-nav float-right d-none d-lg-block">
+            <ul>
+                <li class="active"><a href="{{ url_for('main.sample') }}">Home</a></li>
+                <li><a href="{{url_for('main.submit_review')}}">Submit review</a></li>
+                {% if not current_user.is_authenticated %}
+                <li><a href="http://127.0.0.1:5000/login">Login</a></li>
+                <li><a href="http://127.0.0.1:5000/signup">Sign Up</a></li>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                <li><a href="http://127.0.0.1:5000/logout">Logout</a></li>
+                {% endif %}
+            </ul>
+        </nav><!-- .main-nav -->
+
+    </div>
+  </header><!-- #header -->
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>{{ message }} </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+  <main id="main">
+
+
+
+    <!--==========================
+      Contact Section
+      ============================-->
+      <section id="contact">
+        <div class="container-fluid">
+            <div class="section-header" >
+                <h3>Search Coursewise Reviews</h3>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="form-group col-md-4 col-md-offset-5 align-center ">
+                        <form action="{{url_for('main.course_search_submit')}}" class="submit-course" id="textform" method="post">
+                            <div class="form-group">
+                                {{ form.autocomp.label }}: {{ form.autocomp }}
+                                <script>
+                                    $(function() {
+                                        $.ajax({
+                                            url: '{{ url_for("main.autocomplete") }}'
+                                        }).done(function (data){
+                                            $('#course_name_autocomplete').autocomplete({
+                                                source: data,
+                                                minLength: 2
+                                            });
+                                        });
+                                    });
+                                </script>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div> 
+
             </div>
         </div>
-    </div>
-    {% endfor %}
+      </section><!-- #submit-review-section -->
+
+
+    <section id="testimonials" class="section-bg">
+          <div class="container">
+
+            <header class="section-header">
+              <h3>Reviews</h3>
+            </header>
+
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+
+                <div class="wow fadeInUp">
+        
+                    {% for post in posts %}
+                        <div>
+                            <h3>{{post.author}}</h3>
+                            <!-- <h4>{{readable_time(post.timestamp)}}</h4> -->
+                            <p>{{post.content}}</p>
+                          </div>
+                    {% endfor %}
+
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+    </section><!-- #testimonials -->
+
+  </main>
+
+  <!--==========================
+    Footer
+    ============================-->
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-4 col-md-6 footer-info">
+                        <h3>Course Review system</h3>
+                        <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus. Scelerisque felis imperdiet proin fermentum leo. Amet volutpat consequat mauris nunc congue.</p>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Terms of service</a></li>
+                            <li><a href="#">Privacy policy</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                            A108 Adam Street <br>
+                            New York, NY 535022<br>
+                            United States <br>
+                            <strong>Phone:</strong> +1 5589 55488 55<br>
+                            <strong>Email:</strong> info@example.com<br>
+                        </p>
+
+                        <div class="social-links">
+                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                            <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-newsletter">
+                        <h4>Our Newsletter</h4>
+                        <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna veniam enim veniam illum dolore legam minim quorum culpa amet magna export quem marada parida nodela caramase seza.</p>
+                        <form action="" method="post">
+                            <input type="email" name="email"><input type="submit"  value="Subscribe">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong>NewBiz</strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+        <!--
+          All the links in the footer should remain intact.
+          You can delete the links only if you purchased the pro version.
+          Licensing information: https://bootstrapmade.com/license/
+          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=NewBiz
+      -->
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+  </div>
+</div>
+</footer><!-- #footer -->
 
     <style>
         .submit-review textarea {
@@ -51,81 +231,29 @@
             width: 400px;
             height: 200px
         }
-
-        .post_box {
-            background: #fff;
-            padding: 12px 0px 0px 12px;
-            margin-top: 0px;
-            margin-bottom: 8px;
-            border-top: 1px solid #f0f0f0;
-        }
-
-        .post_box-header {
-            padding-bottom: 12px;
-        }
-
-        .post_box-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 22px;
-            float: left;
-            margin-right: 16px;
-            border: 1px solid #fff;
-            box-shadow: 0px 0px 0px 2px #f00;
-        }
-
-        .post_box-avatar::after {
-            content: "";
-            display: block;
-        }
-
-        .post_box-name {
-            font-weight: bold;
-        }
-
-        .post_box-subtitle {
-            color: #777;
-        }
-
-        .post_box-body {
-            margin-top: 16px;
-            margin-bottom: 8px;
-        }
-
-        .post_box-options {
-            float: right;
-        }
-
-        .option-btn {
-            background: #f8f8f8;
-            border: none;
-            color: #2c3e50;
-            padding: 7px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-left: 2px;
-            margin-right: 2px;
-            outline: none;
-            height: 42px;
-        }
     </style>
-</div>
-<!-- for autocomplete course name -->
-<script>
-    $(function () {
-        $.ajax({
-            url: '{{ url_for("main.autocomplete") }}'
-        }).done(function (data) {
-            $('#course_name_autocomplete').autocomplete({
-                source: data,
-                minLength: 2
-            });
-        });
-    });
-</script>
-{% endblock %}
+
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+    <!-- Uncomment below i you want to use a preloader -->
+    <!-- <div id="preloader"></div> -->
+
+    <!-- JavaScript Libraries -->
+    <!-- <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script> -->
+    <!-- <script src="{{ url_for('static', filename='lib/jquery/jquery-migrate.min.js') }}"></script> -->
+    <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/mobile-nav/mobile-nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/counterup/counterup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/isotope/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/lightbox/js/lightbox.min.js') }}"></script>
+    <!-- Contact Form JavaScript File -->
+    <script src="{{ url_for('static', filename='contactform/contactform.js') }}"></script>
+
+    <!-- Template Main Javascript File -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>
