@@ -176,35 +176,31 @@ def autocomplete():
 @login_required
 def course_search():
     global current_course
-    if current_course == '*':
-        posts = []
-    else:
-        posts = fetch_posts()
-        result_post = []
-        text = ''
+    posts = [post for post in fetch_posts() if 'author' in post.keys()]
+    summ_text = ""
+
+    if current_course != '*':
+        posts = [
+          post for post in posts 
+          if post['course'] == current_course and post['author']]
         for post in posts:
-            if post['course'] == current_course:
-                result_post.append(post)
-                text += post['content'] + ' '
-        summ_text = sumz(text)
-        post_object = {
-            'author': 'Course_summary',
-            'course': 'Course Summary',
-            'content': summ_text,
-        }
-        final = []
-        final.append(post_object)
-        for post in result_post:
-            final.append(post)
-        posts = final
+            summ_text += post['content'] + ' '
+        try:
+          summ_text = sumz(summ_text)
+        except:
+          print("lol",current_course,text)
+          pass
 
     form = SearchForm(request.form)
     return render_template('course_search.html',
                            title='YourNet: Decentralized '
                                  'content sharing',
                            posts=posts,
+                           course_name=current_course,
+                           course_summary=summ_text,
                            node_address=CONNECTED_NODE_ADDRESS,
                            readable_time=timestamp_to_string,
+                           all_courses='*',
                            form=form)
 
 @main.route('/search_submit', methods=['POST'])
