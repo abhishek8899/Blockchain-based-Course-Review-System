@@ -67,9 +67,13 @@ def sample():
     global current_course
     current_course = '*'
     balance = 10
-    author = current_user.name
-    author = hashlib.sha256(author.encode()) 
-    author = author.hexdigest()
+    author = 0
+    try:
+      author = current_user.name
+      author = hashlib.sha256(author.encode()) 
+      author = author.hexdigest()
+    except:
+      author = 0
     # print("-=-=--=-=-=-=--=-=-=-=-")
     # print(author)
     # print(Rcoins[author])
