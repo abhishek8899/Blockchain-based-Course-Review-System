@@ -6,6 +6,16 @@ from flask import Flask, request
 from flask import render_template, redirect, request
 import requests
 import pickle
+from flask_login import login_required, current_user
+from collections import defaultdict
+
+Rcoins = {}
+try:
+    with open('config.rcoin', 'rb') as config_chain_file:
+        Rcoins = pickle.load(config_chain_file)
+except:
+    with open('config.rcoin', 'wb') as config_ut_file:
+        pickle.dump(Rcoins, config_ut_file)    
 
 
 class Block:
@@ -22,6 +32,8 @@ class Block:
         """
         block_string = json.dumps(self.__dict__, sort_keys=True)
         return sha256(block_string.encode()).hexdigest()
+
+
 
 
 class Blockchain:
@@ -164,6 +176,21 @@ blockchain.create_genesis_block()
 # the address to other participating members of the network
 peers = set()
 
+def coins(sender,recipient,quantity):
+    tx_data = {}
+    tx_data["course"] = "Rcoin Transaction"
+    tx_data["content"] = str(sender) + "->" + str(recipient) + ": " + str(quantity)
+
+    tx_data["sender"] = sender
+    tx_data["recipient"] = recipient
+    tx_data["quantity"] = quantity
+    tx_data["timestamp"] = time.time()
+    blockchain.add_new_transaction(tx_data)
+    return "Success", 201
+
+
+
+  
 
 # endpoint to submit a new transaction. This will be used by
 # our application to add new data (posts) to the blockchain
@@ -177,8 +204,29 @@ def new_transaction():
             return "Invalid transaction data", 404
 
     tx_data["timestamp"] = time.time()
-
     blockchain.add_new_transaction(tx_data)
+
+    userId = []
+    with open('config.user', 'rb') as config_chain_file:
+        userId = pickle.load(config_chain_file)
+
+    coins(userId[0],0,1)
+
+    with open('config.rcoin', 'rb') as config_chain_file:
+            Rcoins = pickle.load(config_chain_file)
+
+    try:
+        Rcoins[userId[0]] = Rcoins[userId[0]] - 1
+    except:
+        Rcoins[userId[0]] = 9
+
+    print(userId[0])
+        
+
+    print(Rcoins[userId[0]])
+
+    with open('config.rcoin', 'wb') as config_ut_file:
+            pickle.dump(Rcoins, config_ut_file)
 
     return "Success", 201
 
@@ -205,12 +253,28 @@ def mine_unconfirmed_transactions():
     if not result:
         return "No transactions to mine"
     else:
+        userId = []
+        with open('config.user', 'rb') as config_chain_file:
+            userId = pickle.load(config_chain_file)
+        coins(0,userId[0],3)
+
+        with open('config.rcoin', 'rb') as config_chain_file:
+            Rcoins = pickle.load(config_chain_file)
+
+        try:
+            Rcoins[userId[0]] = Rcoins[userId[0]] + 3
+        except:
+            Rcoins[userId[0]] = 13
+
+        with open('config.rcoin', 'wb') as config_ut_file:
+            pickle.dump(Rcoins, config_ut_file)
         # Making sure we have the longest chain before announcing to the network
         chain_length = len(blockchain.chain)
         consensus()
         if chain_length == len(blockchain.chain):
             # announce the recently mined block to the network
             announce_new_block(blockchain.last_block)
+
         # return "Block #{} is mined.".format(blockchain.last_block.index)
     return redirect('http://127.0.0.1:5000/submit_review')
 
