@@ -12,6 +12,7 @@ from app import constants
 
 main = Blueprint('main', __name__)
 
+
 # The node with which our application interacts, there can be multiple
 # such nodes as well.
 CONNECTED_NODE_ADDRESS = "http://127.0.0.1:8000"
