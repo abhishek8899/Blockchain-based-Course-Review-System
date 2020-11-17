@@ -10,6 +10,7 @@ from wtforms import TextField, Form
 from wtforms.validators import InputRequired
 from app import constants
 from gensim.summarization.summarizer import summarize
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer 
 
 import hashlib 
   
@@ -173,12 +174,15 @@ def autocomplete():
 def course_search():
     global current_course
     posts = [post for post in fetch_posts() if 'author' in post.keys()]
+    posts = [tag_with_sentiment(post) for post in posts]
+    print(posts[:2])
     summ_text = ""
 
     if current_course != '*':
         posts = [
           post for post in posts 
-          if post['course'] == current_course and post['author']]
+          if post['course'] == current_course and post['author']
+        ]
         for post in posts:
             summ_text += post['content'] + ' '
         try:
@@ -217,3 +221,39 @@ def sumz(text):
     summ_words = summarize(text, word_count = 80) 
     print("Word count summary") 
     return summ_words 
+
+def tag_with_sentiment(post): 
+
+  # Create a SentimentIntensityAnalyzer object. 
+  sid_obj = SentimentIntensityAnalyzer() 
+
+  # polarity_scores method of SentimentIntensityAnalyzer 
+  # oject gives a sentiment dictionary. 
+  # which contains pos, neg, neu, and compound scores. 
+  sentiment_dict = sid_obj.polarity_scores(post['content'])
+  
+  # print("Overall sentiment dictionary is : ", sentiment_dict) 
+  # print("sentence was rated as ", sentiment_dict['neg']*100, "% Negative") 
+  # print("sentence was rated as ", sentiment_dict['neu']*100, "% Neutral") 
+  # print("sentence was rated as ", sentiment_dict['pos']*100, "% Positive") 
+
+  # print("Sentence Overall Rated As", end = " ") 
+  
+  senti = ""
+  # decide sentiment as positive, negative and neutral 
+  if sentiment_dict['compound'] >= 0.05 : 
+    senti='positive'
+
+  elif sentiment_dict['compound'] <= - 0.05 : 
+    senti='negative'
+
+  else : 
+    senti='neutral'
+  
+  new_post = {
+    'course': post['course'],
+    'content': post['content'],
+    'author': post['author'],
+    'sentiment': senti
+  }  
+  return new_post
