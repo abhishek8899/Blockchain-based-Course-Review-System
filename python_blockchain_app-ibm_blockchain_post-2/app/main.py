@@ -9,6 +9,7 @@ from flask_login import login_required, current_user
 from wtforms import TextField, Form
 from wtforms.validators import InputRequired
 from app import constants
+from gensim.summarization.summarizer import summarize
 
 import hashlib 
   
@@ -176,10 +177,22 @@ def course_search():
     else:
         posts = fetch_posts()
         result_post = []
+        text = ''
         for post in posts:
             if post['course'] == current_course:
                 result_post.append(post)
-        posts = result_post
+                text += post['content'] + ' '
+        summ_text = sumz(text)
+        post_object = {
+            'author': 'Course_summary',
+            'course': 'Course Summary',
+            'content': summ_text,
+        }
+        final = []
+        final.append(post_object)
+        for post in result_post:
+            final.append(post)
+        posts = final
 
     form = SearchForm(request.form)
     return render_template('course_search.html',
@@ -200,4 +213,11 @@ def course_search_submit():
     global current_course
     current_course = course
 
+
     return redirect('/courses')
+
+def sumz(text):
+    # Summary (80 words) 
+    summ_words = summarize(text, word_count = 80) 
+    print("Word count summary") 
+    return summ_words 
