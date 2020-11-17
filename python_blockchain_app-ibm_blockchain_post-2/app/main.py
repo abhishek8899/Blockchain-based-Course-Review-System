@@ -88,7 +88,7 @@ def sample():
     except:
         balance = 10
 
-    posts = fetch_posts()
+    posts = [post for post in fetch_posts() if 'author' in post.keys()]
     return render_template('sample.html',
                            posts=posts,
                            p1 = posts[0],
