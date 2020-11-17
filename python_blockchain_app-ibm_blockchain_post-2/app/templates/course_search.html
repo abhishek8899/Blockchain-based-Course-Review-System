@@ -152,6 +152,7 @@
                     {% for post in posts %}
                         <div>
                             <h3>{{post.author}}</h3>
+                            <h5>{{post.sentiment}}</h5>
                             <p>{{post.content}}</p>
                           </div>
                     {% endfor %}
