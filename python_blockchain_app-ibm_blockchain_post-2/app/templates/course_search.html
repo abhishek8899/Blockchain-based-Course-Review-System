@@ -32,7 +32,9 @@
             <div style="background: rgb(0, 97, 146) none repeat scroll 0% 0%; box-shadow: rgb(0, 97, 146) 0px 0px 0px 2px;"
                 class="post_box-avatar">{{post.author[0]}}</div>
             <div class="name-header">{{post.course}}</div>
+            {% if post.timestamp %}
             <div class="post_box-subtitle"> Posted at <i>{{readable_time(post.timestamp)}}</i></div>
+            {% endif %}
         </div>
         <div>
             <div class="post_box-body">
