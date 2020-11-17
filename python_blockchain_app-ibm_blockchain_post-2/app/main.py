@@ -17,8 +17,9 @@ main = Blueprint('main', __name__)
 # such nodes as well.
 CONNECTED_NODE_ADDRESS = "http://127.0.0.1:8000"
 
-posts = []
+# posts = []
 blockchain = []
+current_course = '*'
 try:
     blockchain = []
     with open('config.chain', 'rb') as config_chain_file:
@@ -33,7 +34,7 @@ def fetch_posts():
     Function to fetch the chain from a blockchain node, parse the
     data and store it locally.
     """
-
+    posts = []
     get_chain_address = "{}/chain".format(CONNECTED_NODE_ADDRESS)
     response = requests.get(get_chain_address)
     if response.status_code == 200:
@@ -45,14 +46,16 @@ def fetch_posts():
                 tx["hash"] = block["previous_hash"]
                 content.append(tx)
 
-        global posts
         posts = sorted(content, key=lambda k: k['timestamp'],
                        reverse=True)
+    return posts
 
 
 @main.route('/')
 def sample():
-    fetch_posts()
+    global current_course
+    current_course = '*'
+    posts = fetch_posts()
     return render_template('sample.html',
                            posts=posts,
                            p1 = posts[0],
@@ -71,7 +74,9 @@ def sample():
 @main.route('/submit_review')
 @login_required
 def submit_review():
-    fetch_posts()
+    global current_course
+    current_course = '*'
+    posts = fetch_posts()
     form = SearchForm(request.form)
     return render_template('submit_review.html',
                            title='YourNet: Decentralized '
@@ -111,6 +116,8 @@ def submit_textarea():
 @main.route('/profile')
 @login_required
 def profile():
+    global current_course
+    current_course = '*'
     return render_template('profile.html', name=current_user.name)
 
 
@@ -127,7 +134,17 @@ def autocomplete():
 @main.route('/courses')
 @login_required
 def course_search():
-    fetch_posts()
+    global current_course
+    if current_course == '*':
+        posts = []
+    else:
+        posts = fetch_posts()
+        result_post = []
+        for post in posts:
+            if post['course'] == current_course:
+                result_post.append(post)
+        posts = result_post
+
     form = SearchForm(request.form)
     return render_template('course_search.html',
                            title='YourNet: Decentralized '
@@ -136,3 +153,15 @@ def course_search():
                            node_address=CONNECTED_NODE_ADDRESS,
                            readable_time=timestamp_to_string,
                            form=form)
+
+@main.route('/search_submit', methods=['POST'])
+@login_required
+def course_search_submit():
+    """
+    Endpoint to create a new transaction via our application.
+    """
+    course = request.form['autocomp']
+    global current_course
+    current_course = course
+
+    return redirect('/courses')
