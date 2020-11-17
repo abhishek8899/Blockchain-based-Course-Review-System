@@ -118,13 +118,31 @@
         </div>
       </section><!-- #submit-review-section -->
 
+        {% if course_name != "*" %}
+        <section id="services" class="section-bg">
+          <div class="container">
+
+            <header>
+              <h3>{{course_name}}: Summary of all Reviews</h3>
+              <p>{{course_summary}}</p>
+            </header>
+
+          </div>
+        </section><!-- #services -->
+        {% endif %}
 
     <section id="testimonials" class="section-bg">
           <div class="container">
 
-            <header class="section-header">
-              <h3>Reviews</h3>
+            {% if course_name != "*" %}
+            <header>
+              <h3>Reviews:</h3>
             </header>
+            {% else %}
+            <header>
+              <h3>All Course Reviews:</h3>
+            </header>
+            {% endif %}
 
             <div class="row justify-content-center">
               <div class="col-lg-8">
