@@ -7,6 +7,9 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
     <!-- Favicons -->
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
@@ -152,8 +155,25 @@
                     {% for post in posts %}
                         <div>
                             <h3>{{post.author}}</h3>
-                            <h5>{{post.sentiment}}</h5>
+                            <div class="w3-container">
+                            {% if post.sentiment == "positive" %}
+                                    <div style="color:green">
+                                        <h5>Positive</h5>
+                                    </div>
+                            {% endif %}
+                            {% if post.sentiment == "negative" %}
+                                    <div style="color:red">
+                                        <h5>Negative</h5>
+                                    </div>
+                            {% endif %}
+                            {% if post.sentiment == "neutral" %}
+                                    <div style="color:dodgerblue">
+                                        <h5>Neutral</h5>
+                                    </div>
+                            {% endif %}
+                            </div>
                             <p>{{post.content}}</p>
+                            <hr width=70% style="height:12px">
                           </div>
                     {% endfor %}
 

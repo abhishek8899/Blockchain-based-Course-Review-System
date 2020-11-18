@@ -192,7 +192,7 @@ def course_search():
         try:
           summ_text = sumz(summ_text)
         except:
-          print("lol",current_course,text)
+          # print("lol",current_course,text)
           pass
 
     form = SearchForm(request.form)
