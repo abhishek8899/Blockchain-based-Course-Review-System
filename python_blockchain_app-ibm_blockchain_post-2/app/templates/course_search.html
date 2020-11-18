@@ -140,6 +140,22 @@
             {% if course_name != "*" %}
             <header>
               <h3>Reviews:</h3>
+              <h5>General Sentiment:</h5>
+              {% if sentiment == "positive" %}
+                        <div style="color:green">
+                            <h5>Positive</h5>
+                        </div>
+                {% endif %}
+                {% if sentiment == "negative" %}
+                        <div style="color:red">
+                            <h5>Negative</h5>
+                        </div>
+                {% endif %}
+                {% if sentiment == "neutral" %}
+                        <div style="color:dodgerblue">
+                            <h5>Neutral</h5>
+                        </div>
+                {% endif %}
             </header>
             {% else %}
             <header>
@@ -154,6 +170,9 @@
 
                     {% for post in posts %}
                         <div>
+                            {% if course_name == "*" %}
+                            <h3>{{post.course}}</h3>
+                            {% endif %}
                             <h3>{{post.author}}</h3>
                             <div class="w3-container">
                             {% if post.sentiment == "positive" %}
