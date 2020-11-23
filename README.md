@@ -19,8 +19,10 @@ When the right solution is found, the entire network will broadcast that the use
 ## Machine Learning
 We have used some machine learning techniques to enhance the user experience for this platform. The techniques already deployed on the platform are described below:
 
-#### Summarization (Vedansh add more detail about summarization types)
+#### Summarization 
 User can see a summary of all the reviews given for a particular course. We have applied text summarization techniques that give a glimpse of general feedback about that course. This helps a user to quickly get an idea about any new course.
+- We applied summarization on all review of a subject to give brief summary of all review.
+- We have applied a mixture of tf-idf and textrank based extractive summerization in our app where we provide summary in maximum 80 words.
 
 #### Sentiment analysis
 - We have applied sentiment analysis on all the individual reviews to classify them into positive and negative categories.
