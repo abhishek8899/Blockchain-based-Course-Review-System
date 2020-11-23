@@ -53,3 +53,15 @@ Here are a few screenshots
 3. Resyncing with the chain for updated data
 
 ![image.png](https://github.com/satwikkansal/python_blockchain_app/raw/master/screenshots/3.png)
+
+
+## Inmportant files with intricacies
+
+- Two servers run in parallel - one via ./node_server.py and other from ./run_app.py
+- Breifly, node_server.py deals with the blockchain part and handles all the transactions.
+- run_app.py is just to run a parallel server. All other details of the app get imported from the ./app directory.
+- ./app directory includes the database (we have used sqlite3 in our project)
+- auth.py includes the multi-user authentication policies along with handling logins and sessions.
+- models.py includes the details of the database.
+- main.py includes the working of the web application, from introducing the login page to submit/mine/filter the reviews.
+- constants.py include the course names and in future it will also include the names of the static properties (like restaurant names in case of restaurant reviews).
