@@ -1,10 +1,11 @@
 # Course review system - Web application
 
-introuction to the system
+We propose an effective anonymous review system called ReviewCoins, a novel Blockchain-based incentive anonymous review system. Different from the traditional centralized system, the novel anonymous review system should be secure, reliable, transparent, and tamper-resistant. 
 
-## What is blockchain? How it is implemented? And how it works?
+## Why blockchain?
 
-Please read the [step-by-step implementation tutorial](https://www.ibm.com/developerworks/cloud/library/cl-develop-blockchain-app-in-python/index.html) to get your answers :)
+Blockchain-based networks are open and transparent, and promising in recording data with the good properties of tamper-resistance and decentralization.
+Blockchain can provide a better incentive mechanism to encourage mobile users to perform anonymous reviews without the worry of identity information disclosure.
 
 ## Rcoins
 
