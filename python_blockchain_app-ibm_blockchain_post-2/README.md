@@ -21,7 +21,6 @@ User can see a summary of all the reviews given for a particular course. We have
 
 #### Sentiment analysis
 - We have applied sentiment analysis on all the individual reviews to classify them into positive and negative categories.
-- **Add screenshot of an example** 
 - Tagging course reviews with sentiments helps user to quickly navigate to kind of reviews user is looking for. 
 - We also did a sentiment analysis on the summary of the course to classify it into categories (good/moderate/bad). 
 - In the initial stages of the platform usage, we won't have much data so we are using semi-supervised learning to classify the reviews and courses.
