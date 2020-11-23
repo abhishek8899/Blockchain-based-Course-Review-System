@@ -17,7 +17,7 @@ Sending a review will cost Rcoins, which prevents malicious users from sending m
 When the right solution is found, the entire network will broadcast that the user has the right to generate a new block and reward him with a small amount of Rcoins.
 
 ### Consensus Algorithm : PoW
-The system generates a mathematical problem. All those involved in the consensus process will compete to be the first to find a solution to this mathematical problem.When the right solution is found, the entire network will broadcast that the user has the right to generate a new block and reward him with a small amount of Rcoins.
+The system generates a mathematical problem. All those involved in the consensus process will compete to be the first to find a solution to this mathematical problem. When the right solution is found, the entire network will broadcast that the user has the right to generate a new block and reward him with a small amount of Rcoins.
 
 ## Machine Learning
 We have used some machine learning techniques to enhance the user experience for this platform. The techniques already deployed on the platform are described below:
@@ -37,14 +37,14 @@ User can see a summary of all the reviews given for a particular course. We have
 
 ## Inmportant files with intricacies
 
-- Two servers run in parallel - one via ./node_server.py and other from ./run_app.py
+- Two servers run in parallel - one via `./node_server.py` and other from `./run_app.py`
 - Breifly, node_server.py deals with the blockchain part and handles all the transactions.
-- run_app.py is just to run a parallel server. All other details of the app get imported from the ./app directory.
-- ./app directory includes the database (we have used sqlite3 in our project)
-- auth.py includes the multi-user authentication policies along with handling logins and sessions.
-- models.py includes the details of the database.
-- main.py includes the working of the web application, from introducing the login page to submit/mine/filter the reviews.
-- constants.py include the course names and in future it will also include the names of the static properties (like restaurant names in case of restaurant reviews).
+- `run_app.py` is just to run a parallel server. All other details of the app get imported from the `./app` directory.
+- `./app` directory includes the database (we have used **sqalachemy** in our project)
+- `auth.py` includes the multi-user authentication policies along with handling logins and sessions.
+- `models.py` includes the details of the database.
+- `main.py` includes the working of the web application, from introducing the login page to submit/mine/filter the reviews.
+- `constants.py` include the course names and in future it will also include the names of the static properties (like restaurant names in case of restaurant reviews).
 
 ## Instructions to run
 
