@@ -66,16 +66,30 @@ $ python run_app.py
 
 The application should be up and running at [http://localhost:5000](http://localhost:5000).
 
-Here are a few screenshots
+## Features of our app
 
-1. Posting some content
+1. Home Page
 
-![image.png](https://github.com/satwikkansal/python_blockchain_app/raw/master/screenshots/1.png)
+![image.png](Images/Home.png)
 
-2. Requesting the node to mine
+2. Features
 
-![image.png](https://github.com/satwikkansal/python_blockchain_app/raw/master/screenshots/2.png)
+![image.png](Images/Features.png)
 
-3. Resyncing with the chain for updated data
+3. Most recent reviews in a glance
 
-![image.png](https://github.com/satwikkansal/python_blockchain_app/raw/master/screenshots/3.png)
+![image.png](Images/Recent_reviews.png)
+
+4. Information about the status of the blockchain
+
+![image.png](Images/Blockchain_info.png)
+
+5. Write and submit a course review
+
+![image.png](Images/Submit_review.png)
+
+6. Search course wise reviews, helped by auto-complete feature. Each review is categorized into classes Positive/Neutral/Negative. All reviews for a particular course are summarized, to present a course summary. Also we predict the general sentiment of the reviews of the course.
+
+![image.png](Images/Search_review.png)
+
+
