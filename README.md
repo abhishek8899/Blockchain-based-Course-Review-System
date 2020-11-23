@@ -51,7 +51,6 @@ User can see a summary of all the reviews given for a particular course. We have
 Install the dependencies,
 Some requirements will have to be added separtely as there were installation errors when mentioned in requirements.txt
 ```sh
-$ cd project/dir
 $ pip install -r requirements.txt
 ```
 
