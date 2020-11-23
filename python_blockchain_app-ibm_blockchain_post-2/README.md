@@ -53,14 +53,8 @@ The application should be up and running at [http://localhost:5000](http://local
 
 Here are a few screenshots
 
-1. Posting some content
+1. Home Page
 
-![image.png](https://github.com/satwikkansal/python_blockchain_app/raw/master/screenshots/1.png)
+![image.png](Images/Home.png)
 
-2. Requesting the node to mine
 
-![image.png](https://github.com/satwikkansal/python_blockchain_app/raw/master/screenshots/2.png)
-
-3. Resyncing with the chain for updated data
-
-![image.png](https://github.com/satwikkansal/python_blockchain_app/raw/master/screenshots/3.png)
