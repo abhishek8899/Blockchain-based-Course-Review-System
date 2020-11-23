@@ -13,6 +13,20 @@ Rcoins refer to the incentive in this blockchain based course review system. Eac
 Sending a review will cost Rcoins, which prevents malicious users from sending meaningless or fraudulent reviews. After a block is added successfully Reviewer and Verifier will get rewards in Rcoins. We can distinguish the users on the basis of roles. For example, not all the users have the privilege to verify the review. That way ownership will be maintained and not all people would be able to add the blocks to the chain. In case these tokens are not used for a period of time, then they will expire and no longer be used. Our system generates a mathematical problem. All those involved in the consensus process will compete to be the first to find a solution to this mathematical problem.
 When the right solution is found, the entire network will broadcast that the user has the right to generate a new block and reward him with a small amount of Rcoins.
 
+## Machine Learning
+We have used some machine learning techniques to enhance the user experience for this platform. The techniques already deployed on the platform are described below:
+
+#### Summarization (Vedansh add more detail about summarization types)
+User can see a summary of all the reviews given for a particular course. We have applied text summarization techniques that give a glimpse of general feedback about that course. This helps a user to quickly get an idea about any new course.
+
+#### Sentiment analysis
+- We have applied sentiment analysis on all the individual reviews to classify them into positive and negative categories.
+- Tagging course reviews with sentiments helps user to quickly navigate to kind of reviews user is looking for. 
+- We also did a sentiment analysis on the summary of the course to classify it into categories (good/moderate/bad). 
+- In the initial stages of the platform usage, we won't have much data so we are using semi-supervised learning to classify the reviews and courses.
+- We are using a pre-trained model currently and later we will switch to a model trained on course reviews only. Hence we have used lexicon and rule-based sentiment analysis model for the same. This model is specifically tuned for sentiments expressed on social media, and since reviews are often expressed in a free manner, this model is quite helpful.
+
+
 ## Inmportant files with intricacies
 
 - Two servers run in parallel - one via ./node_server.py and other from ./run_app.py
