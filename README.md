@@ -16,7 +16,7 @@ Rcoins refer to the incentive in this blockchain based course review system. Eac
 Sending a review will cost Rcoins, which prevents malicious users from sending meaningless or fraudulent reviews. After a block is added successfully Reviewer and Verifier will get rewards in Rcoins. We can distinguish the users on the basis of roles. For example, not all the users have the privilege to verify the review. That way ownership will be maintained and not all people would be able to add the blocks to the chain. In case these tokens are not used for a period of time, then they will expire and no longer be used. Our system generates a mathematical problem. All those involved in the consensus process will compete to be the first to find a solution to this mathematical problem.
 When the right solution is found, the entire network will broadcast that the user has the right to generate a new block and reward him with a small amount of Rcoins.
 
-## Consensus Algorithm : PoW
+### Consensus Algorithm : PoW
 The system generates a mathematical problem. All those involved in the consensus process will compete to be the first to find a solution to this mathematical problem.When the right solution is found, the entire network will broadcast that the user has the right to generate a new block and reward him with a small amount of Rcoins.
 
 ## Machine Learning
