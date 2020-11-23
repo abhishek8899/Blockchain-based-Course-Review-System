@@ -57,4 +57,24 @@ Here are a few screenshots
 
 ![image.png](Images/Home.png)
 
+2. Features
+
+![image.png](Images/Features.png)
+
+3. Most recent reviews in a glance
+
+![image.png](Images/Recent_reviews.png)
+
+4. Information about the status of the blockchain
+
+![image.png](Images/Blockchain_info.png)
+
+5. Write and submit a course review
+
+![image.png](Images/Submit_review.png)
+
+6. Search course wise reviews, helped by auto-complete feature. Each review is categorized into classes Positive/Neutral/Negative. All reviews for a particular course are summarized, to present a course summary. Also we predict the general sentiment of the reviews of the course.
+
+![image.png](Images/Search_review.png)
+
 
