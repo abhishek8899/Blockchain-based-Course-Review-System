@@ -13,6 +13,17 @@ Rcoins refer to the incentive in this blockchain based course review system. Eac
 Sending a review will cost Rcoins, which prevents malicious users from sending meaningless or fraudulent reviews. After a block is added successfully Reviewer and Verifier will get rewards in Rcoins. We can distinguish the users on the basis of roles. For example, not all the users have the privilege to verify the review. That way ownership will be maintained and not all people would be able to add the blocks to the chain. In case these tokens are not used for a period of time, then they will expire and no longer be used. Our system generates a mathematical problem. All those involved in the consensus process will compete to be the first to find a solution to this mathematical problem.
 When the right solution is found, the entire network will broadcast that the user has the right to generate a new block and reward him with a small amount of Rcoins.
 
+## Inmportant files with intricacies
+
+- Two servers run in parallel - one via ./node_server.py and other from ./run_app.py
+- Breifly, node_server.py deals with the blockchain part and handles all the transactions.
+- run_app.py is just to run a parallel server. All other details of the app get imported from the ./app directory.
+- ./app directory includes the database (we have used sqlite3 in our project)
+- auth.py includes the multi-user authentication policies along with handling logins and sessions.
+- models.py includes the details of the database.
+- main.py includes the working of the web application, from introducing the login page to submit/mine/filter the reviews.
+- constants.py include the course names and in future it will also include the names of the static properties (like restaurant names in case of restaurant reviews).
+
 ## Instructions to run
 
 Install the dependencies,
@@ -53,15 +64,3 @@ Here are a few screenshots
 3. Resyncing with the chain for updated data
 
 ![image.png](https://github.com/satwikkansal/python_blockchain_app/raw/master/screenshots/3.png)
-
-
-## Inmportant files with intricacies
-
-- Two servers run in parallel - one via ./node_server.py and other from ./run_app.py
-- Breifly, node_server.py deals with the blockchain part and handles all the transactions.
-- run_app.py is just to run a parallel server. All other details of the app get imported from the ./app directory.
-- ./app directory includes the database (we have used sqlite3 in our project)
-- auth.py includes the multi-user authentication policies along with handling logins and sessions.
-- models.py includes the details of the database.
-- main.py includes the working of the web application, from introducing the login page to submit/mine/filter the reviews.
-- constants.py include the course names and in future it will also include the names of the static properties (like restaurant names in case of restaurant reviews).
