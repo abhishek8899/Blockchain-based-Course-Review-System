@@ -51,7 +51,7 @@ $ python run_app.py
 
 The application should be up and running at [http://localhost:5000](http://localhost:5000).
 
-Here are a few screenshots
+# Features of our app
 
 1. Home Page
 
