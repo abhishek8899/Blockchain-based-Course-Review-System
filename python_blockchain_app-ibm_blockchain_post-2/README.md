@@ -1,14 +1,11 @@
 # Course review system - Web application
-
-We propose an effective anonymous review system called ReviewCoins, a novel Blockchain-based incentive anonymous review system. Different from the traditional centralized system, the novel anonymous review system should be secure, reliable, transparent, and tamper-resistant. 
-
-We are using blockchain technology and machine learning techniques to build a course review system. Different from the traditional centralized system, the novel anonymous review system should be secure, reliable, transparent, and tamper-resistant. The key novelty of our project is the Incentive Mechanism where the reviewer and miner are rewarded in Rcoins (ReviewCoins) which encourages users to write anonymous reviews without the worry of identity information disclosure. We used NLP and ML techniques to summarize reviews and classify them into positive, neutral and negative tags and we also gave a general sentiment regarding the course.
+We are using **blockchain technology and machine learning** techniques to build a course review system. Different from the traditional centralized system, the novel anonymous review system should be secure, reliable, transparent, and tamper-resistant. The key novelty of our project is the Incentive Mechanism where the reviewer and miner are rewarded in Rcoins (ReviewCoins) which encourages users to write anonymous reviews without the worry of identity information disclosure. We used NLP and ML techniques to summarize reviews and classify them into positive, neutral and negative tags and we also gave a general sentiment regarding the course.
 
 ## Why blockchain?
 In the traditional review system, we have three major problems:
-Lack of anonymity: Reviewing with a real name is required. Hence worrying about being retaliated.
-Lack of incentives: Reviewers are not rewarded by any means for writing reviews.
-Lack of trust: Admin can delete reviews and modify them in a centralized system.
+1. Lack of anonymity: Reviewing with a real name is required. Hence worrying about being retaliated.
+2. Lack of incentives: Reviewers are not rewarded by any means for writing reviews.
+3. Lack of trust: Admin can delete reviews and modify them in a centralized system.
 
 Blockchain-based networks are open and transparent, and promising in recording data with the good properties of tamper-resistance and decentralization.
 Blockchain can provide a better incentive mechanism to encourage mobile users to perform anonymous reviews without the worry of identity information disclosure.
